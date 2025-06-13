@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quayyum Ariyo | Software Engineer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #1e293b, #0f172a);
+            color: #e2e8f0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .futuristic-text {
+            background: linear-gradient(90deg, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        #qa-logo {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            background: radial-gradient(circle, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.7);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #qa-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 4s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translate(-50%, -50%); }
+            100% { transform: rotate(45deg) translate(50%, 50%); }
+        }
+
+        #qa-logo:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.9);
+        }
+
+        .skill-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: #1e293b;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #22d3ee, #a855f7);
+            border-radius: 5px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: progress-shine 3s linear infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #22d3ee, #a855f7);
+            border: 4px solid #1e293b;
+        }
+
+        .timeline-connector {
+            position: absolute;
+            left: -18px;
+            top: 20px;
+            bottom: -20px;
+            width: 3px;
+            background: linear-gradient(to bottom, #22d3ee, #a855f7);
+        }
+
+        .project-card {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .project-inner {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-card:hover .project-inner {
+            transform: rotateY(180deg) scale(1.02);
+        }
+
+        .project-front, .project-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 12px;
+        }
+
+        .project-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+        }
+
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #22d3ee, #a855f7);
+            transition: width 0.4s ease;
+        }
+
+        .nav-link:hover::after, .active-nav::after {
+            width: 100%;
+        }
+
+        .code-snippet {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.85);
+            border-left: 4px solid #22d3ee;
+            padding: 10px 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .terminal-window {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #22d3ee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .terminal-header {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        .terminal-button {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .terminal-content {
+            padding: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .terminal-line {
+            margin-bottom: 10px;
+        }
+
+        .terminal-prompt {
+            color: #a855f7;
+        }
+
+        .terminal-command {
+            color: #22d3ee;
+        }
+
+        .terminal-output {
+            color: #e2e8f0;
+        }
+
+        .bug {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2322d3ee"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>');
+            background-size: contain;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .bug:hover {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        .bug.squashed {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(34, 211, 238, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 10s infinite ease-in-out;
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px)); }
+        }
+
+        #code-editor {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            border: 2px solid #22d3ee;
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .commit-message {
+            font-family: 'Fira Code', monospace;
+            color: #22d3ee;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            #qa-logo {
+                width: 120px;
+                height: 120px;
+                font-size: 3.5rem;
+            }
+
+            .terminal-window {
+                width: 90%;
+                height: 200px;
+                bottom: 2rem;
+                right: 2rem;
+            }
+
+            .terminal-content {
+                font-size: 13px;
+            }
+
+            #code-editor {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Particle Background -->
+    <div id="particle-container"></div>
+
+    <!-- 3D Background Container -->
+    <div id="three-container"></div>
+
+    <!-- Floating Code Snippets -->
+    <div id="code-snippets"></div>
+
+    <!-- Floating Bugs -->
+    <div id="bugs"></div>
+
+    <!-- Terminal Window -->
+    <div class="terminal-window fixed bottom-4 right-4 w-80 h-56 z-10 hidden md:block">
+        <div class="terminal-header">
+            <div class="terminal-button bg-red-500"></div>
+            <div class="terminal-button bg-yellow-500"></div>
+            <div class="terminal-button bg-green-500"></div>
+            <div class="ml-2 text-sm text-gray-300">bash</div>
+        </div>
+        <div class="terminal-content">
+            <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">npm start</span></div>
+            <div class="terminal-line terminal-output">Starting development server...</div>
+            <div class="terminal-line terminal-output">Compiled successfully!</div>
+            <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">_</span></div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 py-12 relative z-10">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row items-center justify-between mb-16">
+            <div class="flex items-center mb-8 md:mb-0">
+                <div id="qa-logo" class="mr-6">QA</div>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold futuristic-text">Quayyum Ariyo</h1>
+                    <p class="text-xl text-gray-300">Software Engineer | Code Weaver & Bug Slayer</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-6 shadow-xl">
+                <div class="flex flex-wrap gap-6">
+                    <a href="mailto:quayyumariyo@gmail.com" class="flex items-center text-gray-300 hover:text-white transition">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span class="hidden md:inline">quayyumariyo@gmail.com</span>
+                    </a>
+                    <a href="tel:+2348066025051" class="flex items-center text-gray-300 hover:text-white transition">
+                        <i class="fas fa-phone mr-2"></i>
+                        <span class="hidden md:inline">+2348066025051</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/quayyum-ariyo-153b2431b/" target="_blank" class="flex items-center text-gray-300 hover:text-white transition">
+                        <i class="fab fa-linkedin mr-2"></i>
+                        <span class="hidden md:inline">LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/Quayyum-a" target="_blank" class="flex items-center text-gray-300 hover:text-white transition">
+                        <i class="fab fa-github mr-2"></i>
+                        <span class="hidden md:inline">GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="mb-16 sticky top-0 bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl py-4 z-20">
+            <ul class="flex flex-wrap justify-center gap-8">
+                <li><a href="#about" class="nav-link text-gray-300 hover:text-white transition">About</a></li>
+                <li><a href="#life" class="nav-link text-gray-300 hover:text-white transition">Life</a></li>
+                <li><a href="#skills" class="nav-link text-gray-300 hover:text-white transition">Skills</a></li>
+                <li><a href="#experience" class="nav-link text-gray-300 hover:text-white transition">Experience</a></li>
+                <li><a href="#projects" class="nav-link text-gray-300 hover:text-white transition">Projects</a></li>
+                <li><a href="#education" class="nav-link text-gray-300 hover:text-white transition">Education</a></li>
+                <li><a href="#contact" class="nav-link text-gray-300 hover:text-white transition">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <!-- About Section -->
+            <section id="about" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">About Me</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div>
+                            <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                                <span class="code-font text-blue-400">>></span> I'm Quayyum Ariyo, a software engineer who lives and breathes code. My days are spent wrestling bugs, architecting systems, and turning coffee into scalable solutions. I thrive on the thrill of debugging a tricky issue at 2 AM or designing a microservice that handles thousands of requests flawlessly.
+                            </p>
+                            <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                                <span class="code-font text-blue-400">>></span> From my first "Hello, World!" to leading agile teams, my journey in tech is fueled by a passion for problem-solving and a love for clean, efficient code. I specialize in full-stack development, with a knack for Python, Java, and JavaScript, and a deep interest in AI-driven platforms and privacy-first systems.
+                            </p>
+                            <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                                <span class="code-font text-blue-400">>></span> As a mentor and team lead, I find joy in sharing knowledge and squashing bugs—both in code and in learning curves. My mission is to build software that not only works but pushes the boundaries of innovation, whether it's optimizing a backend API or mentoring the next generation of coders.
+                            </p>
+                            <p class="text-gray-300 leading-relaxed text-lg">
+                                <span class="code-font text-blue-400">>></span> I dream of contributing to cutting-edge teams like those at NVIDIA or xAI, where I can merge my love for code with groundbreaking technology to shape the future.
+                            </p>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 text-center card-hover">
+                                    <i class="fas fa-code text-5xl mb-3 futuristic-text"></i>
+                                    <h3 class="font-semibold text-lg">Full-Stack Mastery</h3>
+                                    <p class="text-sm text-gray-300">Building seamless end-to-end systems</p>
+                                </div>
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 text-center card-hover">
+                                    <i class="fas fa-bug text-5xl mb-3 futuristic-text"></i>
+                                    <h3 class="font-semibold text-lg">Bug Squashing</h3>
+                                    <p class="text-sm text-gray-300">Debugging with precision</p>
+                                </div>
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 text-center card-hover">
+                                    <i class="fas fa-users text-5xl mb-3 futuristic-text"></i>
+                                    <h3 class="font-semibold text-lg">Team Leadership</h3>
+                                    <p class="text-sm text-gray-300">Guiding agile workflows</p>
+                                </div>
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 text-center card-hover">
+                                    <i class="fas fa-brain text-5xl mb-3 futuristic-text"></i>
+                                    <h3 class="font-semibold text-lg">AI Innovation</h3>
+                                    <p class="text-sm text-gray-300">Crafting intelligent solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day in the Life Section -->
+            <section id="life" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">A Day in the Life</h2>
+                    <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                        Ever wonder what a software engineer's life is like? It's a mix of code, coffee, and conquering bugs. Here's a glimpse into my world:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                <h3 class="text-xl font-semibold text-white mb-3">Morning: Code & Coffee</h3>
+                                <p class="text-gray-300">
+                                    Start the day with a strong brew and a code review. I dive into pull requests, ensuring clean code and catching sneaky bugs before they creep into production.
+                                </p>
+                            </div>
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                <h3 class="text-xl font-semibold text-white mb-3">Afternoon: Building & Debugging</h3>
+                                <p class="text-gray-300">
+                                    Writing new features or squashing bugs in Python or Java. Whether it's optimizing a REST API or debugging a race condition, this is where the magic (and occasional frustration) happens.
+                                </p>
+                            </div>
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                <h3 class="text-xl font-semibold text-white mb-3">Evening: Learning & Mentoring</h3>
+                                <p class="text-gray-300">
+                                    Wrapping up with team syncs, mentoring junior devs, or exploring new tech like AI frameworks. I also tinker with side projects—because coding never stops!
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-white">Live Code Editor</h3>
+                            <div id="code-editor"></div>
+                            <p class="text-gray-400 mt-4 text-sm">Try editing the sample code above—it's a snippet from my daily work!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">Skills</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-white">Technical Skills</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Java</span>
+                                        <span class="text-gray-300">92%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Python</span>
+                                        <span class="text-gray-300">88%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">JavaScript</span>
+                                        <span class="text-gray-300">85%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">HTML/CSS</span>
+                                        <span class="text-gray-300">90%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">MySQL/MongoDB</span>
+                                        <span class="text-gray-300">85%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-white">Non-Technical Skills</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Team Leadership</span>
+                                        <span class="text-gray-300">95%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Communication</span>
+                                        <span class="text-gray-300">90%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Analytical Thinking</span>
+                                        <span class="text-gray-300">92%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Project Management</span>
+                                        <span class="text-gray-300">88%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-300 font-medium">Debugging Mindset</span>
+                                        <span class="text-gray-300">93%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 93%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <h3 class="text-2xl font-semibold mb-6 text-white">Frameworks & Tools</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Flask</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">FastAPI</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">SQLAlchemy</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Jinja2</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">React</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Spring Boot</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Git</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">RESTful APIs</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Agile</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Hexagonal Architecture</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">Docker</div>
+                            <div class="bg-gray-700 bg-opacity-60 px-5 py-3 rounded-full text-sm text-gray-300 hover:bg-gray-600 transition">VS Code</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">Experience</h2>
+
+                    <div class="relative">
+                        <div class="relative pl-10 pb-10 timeline-item">
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-8 card-hover">
+                                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                                    <h3 class="text-2xl font-semibold text-white">Team Lead – Software Development</h3>
+                                    <span class="text-gray-300">Jan 2022 – Present</span>
+                                </div>
+                                <h4 class="text-xl text-gray-300 mb-4">Lawo Technologies, Lagos, Nigeria</h4>
+                                <ul class="list-disc pl-6 space-y-3 text-gray-300">
+                                    <li>Led a team of 8 developers to design scalable microservices, reducing API response times by 25%</li>
+                                    <li>Implemented TDD practices, achieving 95% test coverage across projects</li>
+                                    <li>Debugged critical production issues, including memory leaks and race conditions</li>
+                                    <li>Mentored 5 junior devs, guiding them through clean code and debugging techniques</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-connector"></div>
+                        </div>
+
+                        <div class="relative pl-10 pb-10 timeline-item">
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-8 card-hover">
+                                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                                    <h3 class="text-2xl font-semibold text-white">Community Tech Mentor</h3>
+                                    <span class="text-gray-300">2024 – Present</span>
+                                </div>
+                                <h4 class="text-xl text-gray-300 mb-4">Semicolon Africa</h4>
+                                <ul class="list-disc pl-6 space-y-3 text-gray-300">
+                                    <li>Taught 20+ students Python, Git, and debugging strategies</li>
+                                    <li>Led workshops on TDD and clean code, emphasizing practical debugging</li>
+                                    <li>Reviewed 15+ capstone projects, fixing bugs and optimizing code</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-connector"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">Projects</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="project-card h-72">
+                            <div class="project-inner relative w-full h-full rounded-xl">
+                                <div class="project-front bg-gray-700 bg-opacity-60 rounded-xl p-8 flex flex-col justify-between h-full">
+                                    <div>
+                                        <h3 class="text-2xl font-semibold text-white mb-3">ONCE – Medical Inventory System</h3>
+                                        <p class="text-gray-300">A full-stack platform for hospital inventory with real-time tracking</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-3 mt-4">
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Flask</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">MySQL</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Jinja2</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Docker</span>
+                                    </div>
+                                    <div class="absolute bottom-6 right-6 text-gray-400">
+                                        <i class="fas fa-rotate"></i> Hover to explore
+                                    </div>
+                                </div>
+                                <div class="project-back bg-gray-700 rounded-xl p-8">
+                                    <h3 class="text-2xl font-semibold text-white mb-4">Key Features</h3>
+                                    <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                        <li>QR-based drug verification with 99% accuracy</li>
+                                        <li>WebSocket-powered real-time inventory updates</li>
+                                        <li>Automated alerts for expiring inventory</li>
+                                        <li>JWT-based role authentication</li>
+                                    </ul>
+                                    <div class="mt-6">
+                                        <a href="#" class="text-blue-400 hover:text-blue-300 text-sm font-medium">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card h-72">
+                            <div class="project-inner relative w-full h-full rounded-xl">
+                                <div class="project-front bg-gray-700 bg-opacity-60 rounded-xl p-8 flex flex-col justify-between h-full">
+                                    <div>
+                                        <h3 class="text-2xl font-semibold text-white mb-3">WasteLess – Food Waste Platform</h3>
+                                        <p class="text-gray-300">Connects food donors with NGOs to reduce waste</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-3 mt-4">
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">FastAPI</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">PostgreSQL</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">React</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Docker</span>
+                                    </div>
+                                    <div class="absolute bottom-6 right-6 text-gray-400">
+                                        <i class="fas fa-rotate"></i> Hover to explore
+                                    </div>
+                                </div>
+                                <div class="project-back bg-gray-700 rounded-xl p-8">
+                                    <h3 class="text-2xl font-semibold text-white mb-4">Key Features</h3>
+                                    <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                        <li>Real-time donation dashboard with analytics</li>
+                                        <li>Geolocation matching for efficient logistics</li>
+                                        <li>Automated notifications via email/SMS</li>
+                                        <li>99% uptime with containerized deployment</li>
+                                    </ul>
+                                    <div class="mt-6">
+                                        <a href="#" class="text-blue-400 hover:text-blue-300 text-sm font-medium">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card h-72">
+                            <div class="project-inner relative w-full h-full rounded-xl">
+                                <div class="project-front bg-gray-700 bg-opacity-60 rounded-xl p-8 flex flex-col justify-between h-full">
+                                    <div>
+                                        <h3 class="text-2xl font-semibold text-white mb-3">FreshTruck – Logistics System</h3>
+                                        <p class="text-gray-300">Delivery tracking for fresh produce logistics</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-3 mt-4">
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Java</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Spring Boot</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">MongoDB</span>
+                                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm text-gray-300">Kafka</span>
+                                    </div>
+                                    <div class="absolute bottom-6 right-6 text-gray-400">
+                                        <i class="fas fa-rotate"></i> Hover to explore
+                                    </div>
+                                </div>
+                                <div class="project-back bg-gray-700 rounded-xl p-8">
+                                    <h3 class="text-2xl font-semibold text-white mb-4">Key Features</h3>
+                                    <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                        <li>ML-driven route optimization</li>
+                                        <li>Real-time temperature monitoring</li>
+                                        <li>Driver analytics dashboard</li>
+                                        <li>30% faster delivery times</li>
+                                    </ul>
+                                    <div class="mt-6">
+                                        <a href="#" class="text-blue-400 hover:text-blue-300 text-sm font-medium">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education & Certifications -->
+            <section id="education" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">Education & Certifications</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-white">Education</h3>
+                            <div class="bg-gray-700 bg-opacity-60 rounded-xl p-8 card-hover">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="text-xl font-semibold text-white">Software Engineering Certification</h4>
+                                        <p class="text-gray-300">Semicolon Africa, Lagos, Nigeria</p>
+                                    </div>
+                                    <span class="text-gray-300">2025 (Expected)</span>
+                                </div>
+                                <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                    <li>Mastered full-stack development and system design</li>
+                                    <li>Specialized in AI integration and microservices</li>
+                                    <li>Built real-world projects with TDD and Agile</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-white">Certifications</h3>
+                            <div class="space-y-6">
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                    <h4 class="font-semibold text-white">Hexagonal Architecture & DDD</h4>
+                                    <p class="text-sm text-gray-300">Practical Implementation, 2024</p>
+                                </div>
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                    <h4 class="font-semibold text-white">Advanced Git & Version Control</h4>
+                                    <p class="text-sm text-gray-300">Udemy, 2023</p>
+                                </div>
+                                <div class="bg-gray-700 bg-opacity-60 rounded-xl p-6 card-hover">
+                                    <h4 class="font-semibold text-white">Professional Scrum Master I</h4>
+                                    <p class="text-sm text-gray-300">Scrum.org, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="mb-24">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-xl p-10 shadow-xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 futuristic-text">Get In Touch</h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div>
+                            <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                                Got a bug to squash or a project to code? I'm all about building innovative solutions and collaborating with passionate teams. Reach out, and let's debug the future together!
+                            </p>
+
+                            <div class="space-y-6">
+                                <div class="flex items-center">
+                                    <div class="bg-gray-700 bg-opacity-60 p-4 rounded-full mr-4">
+                                        <i class="fas fa-map-marker-alt futuristic-text text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Location</h4>
+                                        <p class="text-gray-300">Lagos, Nigeria</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-gray-700 bg-opacity-60 p-4 rounded-full mr-4">
+                                        <i class="fas fa-envelope futuristic-text text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Email</h4>
+                                        <p class="text-gray-300">quayyumariyo@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-gray-700 bg-opacity-60 p-4 rounded-full mr-4">
+                                        <i class="fas fa-phone futuristic-text text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Phone</h4>
+                                        <p class="text-gray-300">+2348066025051</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8">
+                                <h4 class="font-semibold text-white mb-4">Connect With Me</h4>
+                                <div class="flex space-x-6">
+                                    <a href="https://www.linkedin.com/in/quayyum-ariyo-153b2431b/" target="_blank" class="bg-gray-700 bg-opacity-60 p-4 rounded-full hover:bg-gray-600 transition">
+                                        <i class="fab fa-linkedin-in text-2xl"></i>
+                                    </a>
+                                    <a href="https://github.com/Quayyum-a" target="_blank" class="bg-gray-700 bg-opacity-60 p-4 rounded-full hover:bg-gray-600 transition">
+                                        <i class="fab fa-github text-2xl"></i>
+                                    </a>
+                                    <a href="#" class="bg-gray-700 bg-opacity-60 p-4 rounded-full hover:bg-gray-600 transition">
+                                        <i class="fab fa-twitter text-2xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="name" class="block text-gray-300 mb-2 font-medium">Name</label>
+                                    <input type="text" id="name" class="w-full bg-gray-700 bg-opacity-60 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-gray-300 mb-2 font-medium">Email</label>
+                                    <input type="email" id="email" class="w-full bg-gray-700 bg-opacity-60 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="subject" class="block text-gray-300 mb-2 font-medium">Subject</label>
+                                    <input type="text" id="subject" class="w-full bg-gray-700 bg-opacity-60 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-gray-300 mb-2 font-medium">Message</label>
+                                    <textarea id="message" rows="5" class="w-full bg-gray-700 bg-opacity-60 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+                                </div>
+                                <button type="button" onclick="submitForm()" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-10 text-gray-400">
+            <p>© 2025 Quayyum Ariyo. All bugs squashed.</p>
+            <p class="mt-3">Crafted with <i class="fas fa-heart text-red-500"></i> and <i class="fas fa-code text-blue-400"></i> in Lagos</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('three-container').appendChild(renderer.domElement);
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x606060, 1.2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(2, 2, 2);
+        scene.add(directionalLight);
+
+        // Create advanced computer model
+        const createComputer = () => {
+            const group = new THREE.Group();
+
+            // Monitor
+            const monitorGeometry = new THREE.BoxGeometry(2.5, 1.5, 0.15);
+            const monitorMaterial = new THREE.MeshPhongMaterial({
+                color: 0x1e293b,
+                emissive: 0x111111,
+                specular: 0x333333,
+                shininess: 50
+            });
+            const monitor = new THREE.Mesh(monitorGeometry, monitorMaterial);
+            monitor.position.y = 0.75;
+            group.add(monitor);
+
+            // Screen with code-like texture
+            const screenGeometry = new THREE.PlaneGeometry(2.3, 1.3);
+            const screenMaterial = new THREE.MeshBasicMaterial({
+                color: 0x22d3ee,
+                transparent: true,
+                opacity: 0.8,
+                side: THREE.DoubleSide
+            });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.set(0, 0.75, 0.08);
+            group.add(screen);
+
+            // Monitor stand
+            const standGeometry = new THREE.CylinderGeometry(0.15, 0.25, 0.6, 12);
+            const standMaterial = new THREE.MeshPhongMaterial({ color: 0x1e293b });
+            const stand = new THREE.Mesh(standGeometry, standMaterial);
+            stand.position.y = -0.25;
+            group.add(stand);
+
+            // Keyboard
+            const keyboardGeometry = new THREE.BoxGeometry(1.8, 0.08, 0.6);
+            const keyboardMaterial = new THREE.MeshPhongMaterial({ color: 0x1e293b });
+            const keyboard = new THREE.Mesh(keyboardGeometry, keyboardMaterial);
+            keyboard.position.set(0, -0.4, -0.9);
+            group.add(keyboard);
+
+            // Mouse
+            const mouseGeometry = new THREE.BoxGeometry(0.2, 0.05, 0.3);
+            const mouseMaterial = new THREE.MeshPhongMaterial({ color: 0x1e293b });
+            const mouse = new THREE.Mesh(mouseGeometry, mouseMaterial);
+            mouse.position.set(0.8, -0.4, -0.7);
+            group.add(mouse);
+
+            // Coffee mug
+            const mugGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.3, 12);
+            const mugMaterial = new THREE.MeshPhongMaterial({ color: 0x4b4b4b });
+            const mug = new THREE.Mesh(mugGeometry, mugMaterial);
+            mug.position.set(-0.8, -0.4, -0.7);
+            group.add(mug);
+
+            return group;
+        };
+
+        const computer = createComputer();
+        scene.add(computer);
+
+        // Create particle system
+        const createParticles = () => {
+            const container = document.getElementById('particle-container');
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.setProperty('--x', (Math.random() - 0.5) * 200);
+                particle.style.setProperty('--y', (Math.random() - 0.5) * 200);
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                container.appendChild(particle);
+            }
+        };
+
+        // Create floating code snippets
+        const codeSnippets = [
+            "async function squashBug() {\n  try {\n    await debug();\n  } catch (e) {\n    console.error(e);\n  }\n}",
+            "class Coder {\n  code() {\n    return 'Clean Code';\n  }\n}",
+            "const stack = {\n  tech: ['Python', 'Java', 'JS'],\n  bugs: 0\n};",
+            "while (bugs.length > 0) {\n  squash(bugs.pop());\n}",
+            "const api = await fetch('/data')\n  .then(res => res.json());"
+        ];
+
+        const createCodeElements = () => {
+            const container = document.getElementById('code-snippets');
+            for (let i = 0; i < 15; i++) {
+                const snippet = document.createElement('div');
+                snippet.className = 'code-snippet';
+                snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                snippet.style.left = `${Math.random() * 90 + 5}%`;
+                snippet.style.top = `${Math.random() * 90 + 5}%`;
+                snippet.style.transform = `scale(${Math.random() * 0.6 + 0.5}) rotate(${Math.random() * 10 - 5}deg)`;
+                snippet.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(snippet);
+
+                gsap.fromTo(snippet,
+                    { opacity: 0, y: 50 },
+                    { opacity: 0.85, y: 0, duration: 1.5, delay: Math.random() * 2, ease: 'power2.out' }
+                );
+            }
+        };
+
+        // Create interactive bugs
+        let bugCount = 0;
+        const createBugs = () => {
+            const container = document.getElementById('bugs');
+            for (let i = 0; i < 12; i++) {
+                const bug = document.createElement('div');
+                bug.className = 'bug';
+                bug.style.left = `${Math.random() * 90 + 5}%`;
+                bug.style.top = `${Math.random() * 90 + 5}%`;
+                bug.style.animationDelay = `${Math.random() * 5}s`;
+                bug.style.animationDuration = `${Math.random() * 4 + 4}s`;
+                bug.addEventListener('click', () => squashBug(bug));
+                container.appendChild(bug);
+                bugCount++;
+            }
+        };
+
+        // Bug squashing animation
+        const squashBug = (bug) => {
+            bug.classList.add('squashed');
+            const message = document.createElement('div');
+            message.className = 'commit-message';
+            message.textContent = 'git commit -m "Squashed bug #"';
+            message.style.left = bug.style.left;
+            message.style.top = bug.style.top;
+            document.body.appendChild(message);
+
+            gsap.to(message, {
+                opacity: 1,
+                y: -50,
+                duration: 1,
+                ease: 'power2.out',
+                onComplete: () => {
+                    message.remove();
+                    bug.remove();
+                    bugCount--;
+                    if (bugCount === 0) {
+                        setTimeout(createBugs, 5000); // Respawn bugs after 5s
+                    }
+                }
+            });
+        };
+
+        // Initialize particles, snippets, and bugs
+        createParticles();
+        createCodeElements();
+        createBugs();
+
+        // Initialize code editor
+        const editor = ace.edit('code-editor');
+        editor.setTheme('ace/theme/monokai');
+        editor.session.setMode('ace/mode/python');
+        editor.setValue(`# Sample code from my daily work\ndef optimize_system(data):\n    try:\n        result = process_data(data)\n        if not result:\n            raise ValueError("Invalid data")\n        return result\n    except Exception as e:\n        log_error(e)\n        return None\n\n# Try editing this code!`);
+        editor.setOptions({
+            readOnly: false,
+            fontSize: 14,
+            showPrintMargin: false,
+            wrap: true
+        });
+
+        // Camera position
+        camera.position.set(0, 1, 5);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            computer.rotation.y += 0.003;
+            computer.position.y = Math.sin(Date.now() * 0.001) * 0.25;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Smooth scrolling and nav highlighting
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-nav'));
+                this.classList.add('active-nav');
+            });
+        });
+
+        // GSAP animations for sections
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Animate skill bars
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const animateSkillBars = () => {
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                gsap.fromTo(bar,
+                    { width: '0%' },
+                    { width, duration: 1.5, ease: 'power2.out' }
+                );
+            });
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('#skills').forEach(section => observer.observe(section));
+
+        // Enhanced terminal animation
+        const terminalLines = [
+            { command: 'npm run build', output: 'Building project...\nBuild completed in 2.3s!' },
+            { command: 'git push origin main', output: 'Pushing to remote...\nPush successful!' },
+            { command: 'docker-compose up', output: 'Starting containers...\nServices running!' },
+            { command: 'python manage.py runserver', output: 'Starting Django server...\nServer running at http://localhost:8000' },
+            { command: 'java -jar app.jar', output: 'Spring Boot application starting...\nStarted in 1.8s' },
+            { command: 'pytest', output: 'Running tests...\nAll tests passed!' }
+        ];
+
+        const terminalContent = document.querySelector('.terminal-content');
+        let currentLine = 0;
+
+        const updateTerminal = () => {
+            if (currentLine < terminalLines.length) {
+                const line = terminalLines[currentLine];
+                const commandEl = document.querySelector('.terminal-command');
+                commandEl.textContent = line.command;
+
+                gsap.to(commandEl, {
+                    opacity: 1,
+                    duration: 0.5,
+                    onComplete: () => {
+                        const outputLines = terminalContent.querySelectorAll('.terminal-output');
+                        if (outputLines.length > 1) {
+                            gsap.to(outputLines[0], { opacity: 0, duration: 0.3, onComplete: () => outputLines[0].remove() });
+                            gsap.to(outputLines[1], { opacity: 0, duration: 0.3, onComplete: () => outputLines[1].remove() });
+                        }
+
+                        const newOutput = document.createElement('div');
+                        newOutput.className = 'terminal-line terminal-output';
+                        newOutput.textContent = line.output;
+                        terminalContent.appendChild(newOutput);
+
+                        gsap.from(newOutput, { opacity: 0, y: 10, duration: 0.5 });
+
+                        const newPrompt = document.createElement('div');
+                        newPrompt.className = 'terminal-line';
+                        newPrompt.innerHTML = '<span class="terminal-prompt">$</span> <span class="terminal-command">_</span>';
+                        terminalContent.appendChild(newPrompt);
+
+                        currentLine++;
+                        if (currentLine < terminalLines.length) {
+                            setTimeout(updateTerminal, 2500);
+                        } else {
+                            currentLine = 0;
+                            setTimeout(updateTerminal, 3500);
+                        }
+                    }
+                });
+            }
+        };
+
+        setTimeout(updateTerminal, 2000);
+
+        // Form submission simulation
+        function submitForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && subject && message) {
+                alert('Message sent successfully! (This is a demo)');
+                document.querySelector('form').reset();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+    </script>
+</body>
+</html>
