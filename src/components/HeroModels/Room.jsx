@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { BlendFunction as PPBlendFunction } from "postprocessing";
 import * as THREE from "three";
 
 export function Room(props) {
@@ -53,7 +53,7 @@ export function Room(props) {
           intensity={1.5} // Strength of the bloom
           luminanceThreshold={0.2} // Minimum luminance needed
           luminanceSmoothing={0.9} // Smooth transition
-          blendFunction={BlendFunction.ADD} // How it blends
+          blendFunction={PPBlendFunction.ADD} // How it blends
         />
       </EffectComposer>
       <mesh
