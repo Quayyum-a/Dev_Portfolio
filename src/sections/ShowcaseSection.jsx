@@ -50,7 +50,28 @@ const ShowcaseSection = () => {
           {/* LEFT */}
           <div className="first-project-wrapper" ref={project1Ref}>
             <div className="image-wrapper">
-              <img src="/images/project1.png" alt="Ryde" loading="lazy" />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="
+                    /images/project1-400w.webp 400w,
+                    /images/project1-800w.webp 800w,
+                    /images/project1-1200w.webp 1200w
+                  "
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <img
+                  src="/images/project1.png"
+                  alt="Ryde"
+                  loading="lazy"
+                  srcSet="
+                    /images/project1-400w.webp 400w,
+                    /images/project1-800w.webp 800w,
+                    /images/project1-1200w.webp 1200w
+                  "
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </picture>
             </div>
             <div className="text-content">
               <h2>
@@ -67,22 +88,56 @@ const ShowcaseSection = () => {
           <div className="project-list-wrapper overflow-hidden">
             <div className="project" ref={project2Ref}>
               <div className="image-wrapper bg-[#ffefdb]">
-                <img
-                  src="/images/project2.png"
-                  alt="Library Management Platform"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet="
+                      /images/project2-400w.webp 400w,
+                      /images/project2-800w.webp 800w
+                    "
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <img
+                    src="/images/project2.png"
+                    alt="Library Management Platform"
+                    loading="lazy"
+                    srcSet="
+                      /images/project2-400w.webp 400w,
+                      /images/project2-800w.webp 800w
+                    "
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </picture>
               </div>
               <h2>Library Management Platform</h2>
             </div>
             <div className="project" ref={project3Ref}>
               <div className="image-wrapper bg-[#ffe7db]">
-                <img src="/images/project3.png" alt="YC Directory" loading="lazy" />
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet="
+                      /images/project3-400w.webp 400w,
+                      /images/project3-800w.webp 800w
+                    "
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <img
+                    src="/images/project3.png"
+                    alt="YC Directory"
+                    loading="lazy"
+                    srcSet="
+                      /images/project3-400w.webp 400w,
+                      /images/project3-800w.webp 800w
+                    "
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </picture>
               </div>
               <h2>YC Directory - A Startup Showcase App </h2>
             </div>
-          </div>
         </div>
+      </div>
       </div>
     </section>
   );
