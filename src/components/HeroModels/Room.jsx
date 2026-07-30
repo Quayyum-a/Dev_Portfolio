@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
@@ -9,33 +9,41 @@ export function Room(props) {
   const screensRef = useRef();
   const matcapTexture = useTexture("/images/textures/mat1.png");
 
-  const curtainMaterial = new THREE.MeshPhongMaterial({
-    color: "#d90429",
-  });
+  // Memoize materials to prevent recreation on every render
+  const curtainMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ color: "#d90429" }),
+    []
+  );
 
-  const bodyMaterial = new THREE.MeshPhongMaterial({
-    map: matcapTexture,
-  });
+  const bodyMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ map: matcapTexture }),
+    [matcapTexture]
+  );
 
-  const tableMaterial = new THREE.MeshPhongMaterial({
-    color: "#582f0e",
-  });
+  const tableMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ color: "#582f0e" }),
+    []
+  );
 
-  const radiatorMaterial = new THREE.MeshPhongMaterial({
-    color: "#fff",
-  });
+  const radiatorMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ color: "#fff" }),
+    []
+  );
 
-  const compMaterial = new THREE.MeshStandardMaterial({
-    color: "#fff",
-  });
+  const compMaterial = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: "#fff" }),
+    []
+  );
 
-  const pillowMaterial = new THREE.MeshPhongMaterial({
-    color: "#8338ec",
-  });
+  const pillowMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ color: "#8338ec" }),
+    []
+  );
 
-  const chairMaterial = new THREE.MeshPhongMaterial({
-    color: "#000",
-  });
+  const chairMaterial = useMemo(
+    () => new THREE.MeshPhongMaterial({ color: "#000" }),
+    []
+  );
 
   return (
     <group {...props} dispose={null}>
