@@ -13,8 +13,7 @@ export default defineConfig({
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-countup'],
           'vendor-gsap': ['gsap', '@gsap/react'],
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
-          'vendor-postprocessing': ['postprocessing'],
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'postprocessing'],
           'vendor-emailjs': ['@emailjs/browser', 'emailjs'],
           'vendor-utils': ['react-responsive'],
         },
