@@ -1,9 +1,18 @@
 import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
-import HeroExperience from "../components/HeroModels/HeroExperience";
+import { createLazy3DComponent } from "../components/Lazy3D";
 import { words } from "../constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
+const LazyHeroExperience = createLazy3DComponent(
+  () => import("../components/HeroModels/HeroExperience"),
+  {
+    displayName: 'LazyHeroExperience',
+    preload: true,
+    rootMargin: '200px'
+  }
+);
 
 const Hero = () => {
   useGSAP(() => {
@@ -70,7 +79,7 @@ const Hero = () => {
         {/* RIGHT: 3D MODEL */}
         <figure>
           <div className="hero-3d-layout">
-            <HeroExperience />
+            <LazyHeroExperience />
           </div>
         </figure>
       </div>
