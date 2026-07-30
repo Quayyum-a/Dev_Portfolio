@@ -39,6 +39,6 @@ const NavBar = React.memo(() => {
       </div>
     </header>
   );
-};
+});
 
 export default NavBar;

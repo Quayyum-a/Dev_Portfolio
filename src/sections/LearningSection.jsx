@@ -48,13 +48,12 @@ const LearningSection = () => {
                   <h3 className="font-semibold text-xl mb-2">{topic.title}</h3>
                   <p className="text-white-50 mb-4">{topic.description}</p>
 
-                  {/* Progress Bar */}
                   <div className="mb-4">
                     <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
                       <div
-                        className={`h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-1000`}
-                        style={{ width: `${topic.progress}%` }}
-                      ></div>
+                        className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-1000"
+                        style={{ width: topic.progress + "%" }}
+                      />
                     </div>
                     <div className="flex justify-between text-xs text-white-50 mt-1">
                       <span>Progress</span>
@@ -62,7 +61,6 @@ const LearningSection = () => {
                     </div>
                   </div>
 
-                  {/* Resources */}
                   <div className="space-y-2">
                     <p className="font-semibold text-white mb-2">Resources:</p>
                     {topic.resources.map((resource, idx) => (
@@ -85,8 +83,8 @@ const LearningSection = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

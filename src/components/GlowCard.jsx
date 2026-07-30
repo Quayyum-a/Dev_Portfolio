@@ -55,6 +55,6 @@ const GlowCard = React.memo(({ card, children, index }) => {
       {children}
     </div>
   );
-};
+});
 
 export default GlowCard;
