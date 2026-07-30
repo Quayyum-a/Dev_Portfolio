@@ -2,7 +2,8 @@ import React from "react";
 import TitleHeader from "../components/TitleHeader";
 import { learningTopics } from "../constants";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
