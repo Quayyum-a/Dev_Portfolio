@@ -1,40 +1,77 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import React, { useMemo } from "react";
 
 import Computer from "./Computer";
 
 const ContactExperience = () => {
+  const cameraPosition = useMemo(() => [0, 3, 7], []);
+  const cameraFov = useMemo(() => 45, []);
+  const ambientLightProps = useMemo(
+    () => ({ intensity: 0.5, color: "#fff4e6" }),
+    []
+  );
+  const directionalLight1Props = useMemo(
+    () => ({ position: [5, 5, 3], intensity: 2.5, color: "#ffd9b3" }),
+    []
+  );
+  const directionalLight2Props = useMemo(
+    () => ({
+      position: [5, 9, 1],
+      castShadow: true,
+      intensity: 2.5,
+      color: "#ffd9b3",
+    }),
+    []
+  );
+  const orbitControlsProps = useMemo(
+    () => ({
+      enableZoom: false,
+      minPolarAngle: Math.PI / 5,
+      maxPolarAngle: Math.PI / 2,
+    }),
+    []
+  );
+  const planeProps = useMemo(
+    () => ({
+      receiveShadow: true,
+      position: [0, -1.5, 0],
+      rotation: [-Math.PI / 2, 0, 0],
+      args: [30, 30],
+    }),
+    []
+  );
+  const computerGroupProps = useMemo(
+    () => ({
+      scale: 0.03,
+      position: [0, -1.49, -2],
+      castShadow: true,
+    }),
+    []
+  );
+  const planeMaterial = useMemo(
+    () => ({ color: "#a46b2d" }),
+    []
+  );
+
   return (
-    <Canvas shadows camera={{ position: [0, 3, 7], fov: 45 }}>
-      <ambientLight intensity={0.5} color="#fff4e6" />
+    <Canvas shadows camera={{ position: cameraPosition, fov: cameraFov }}>
+      <ambientLight {...ambientLightProps} />
 
-      <directionalLight position={[5, 5, 3]} intensity={2.5} color="#ffd9b3" />
+      <directionalLight {...directionalLight1Props} />
 
-      <directionalLight
-        position={[5, 9, 1]}
-        castShadow
-        intensity={2.5}
-        color="#ffd9b3"
-      />
+      <directionalLight {...directionalLight2Props} />
 
-      <OrbitControls
-        enableZoom={false}
-        minPolarAngle={Math.PI / 5}
-        maxPolarAngle={Math.PI / 2}
-      />
+      <OrbitControls {...orbitControlsProps} />
 
       <group scale={[1, 1, 1]}>
-        <mesh
-          receiveShadow
-          position={[0, -1.5, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <planeGeometry args={[30, 30]} />
-          <meshStandardMaterial color="#a46b2d" />
+        <mesh {...planeProps}>
+          <planeGeometry args={planeProps.args} />
+          <meshStandardMaterial {...planeMaterial} />
         </mesh>
       </group>
 
-      <group scale={0.03} position={[0, -1.49, -2]} castShadow>
+      <group {...computerGroupProps}>
         <Computer />
       </group>
     </Canvas>
