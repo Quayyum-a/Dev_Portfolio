@@ -2,7 +2,7 @@ import React from "react";
 import { counterItems } from "../constants";
 import CountUp from "react-countup";
 
-const AnimatedCounter = () => {
+const AnimatedCounter = React.memo(() => {
   return (
     <div id="counter" className="padding-x-lg xl:mt-0 mt-32">
       <div className="mx-auto grid-4-cols">
@@ -20,6 +20,6 @@ const AnimatedCounter = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AnimatedCounter;

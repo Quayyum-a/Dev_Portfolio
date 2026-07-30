@@ -15,6 +15,35 @@ body {
   font-family: "Mona Sans", sans-serif;
 }
 
+/* Skip navigation link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 1000;
+  transition: top 0.3s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Enhanced focus visibility */
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Additional focus styles for specific elements */
+.button:focus-visible,
+.navbar a:focus-visible,
+.contact-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+}
+
 section {
   width: 100dvw;
 }
@@ -39,6 +68,21 @@ section {
 }
 
 @layer components {
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
   .padding-x {
     @apply px-5 md:px-10;
   }
@@ -425,6 +469,20 @@ section {
   }
 }
 /* marquee end */
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  /* Exceptions for essential animations if needed */
+  .essential-animation {
+    animation-duration: inherit !important;
+  }
+}
 
 .card {
   --glow-x: 50%;

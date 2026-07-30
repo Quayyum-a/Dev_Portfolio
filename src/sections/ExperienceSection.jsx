@@ -83,7 +83,7 @@ const ExperienceSection = () => {
                 <div className="xl:w-2/6 timeline-card">
                   <GlowCard card={card} index={index}>
                     <div>
-                      <img src={card.imgPath} alt={card.title} />
+                      <img src={card.imgPath} alt={card.title} loading="lazy" />
                     </div>
                   </GlowCard>
                 </div>
@@ -95,22 +95,84 @@ const ExperienceSection = () => {
                     </div>
                     <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-20">
                       <div className="timeline-logo">
-                        <img src={card.logoPath} alt="logo" />
+                        <img src={card.logoPath} alt="logo" loading="lazy" />
                       </div>
-                      <div>
-                        <h1 className="font-semibold text-3xl">{card.title}</h1>
-                        <p className="my-5 text-white-50"> 📅 {card.date}</p>
-                        <p className="text-[#839cb5] italic ">
-                          {" "}
-                          Responsibilities{" "}
-                        </p>
-                        <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
-                          {card.responsibilities.map((responsibility) => (
-                            <li key={responsibility} className="text-lg">
-                              {responsibility}
-                            </li>
-                          ))}
-                        </ul>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline mb-2">
+                          <h1 className="font-semibold text-3xl mr-3">{card.title}</h1>
+                          <span className="text-xs text-white-50 bg-gray-800 px-2 py-1 rounded">
+                            {card.date}
+                          </span>
+                        </div>
+
+                        {/* Challenge */}
+                        <div className="space-y-2">
+                          <h2 className="font-semibold text-xl text-blue-400">Challenge</h2>
+                          <p className="text-white-50">{card.challenge}</p>
+                        </div>
+
+                        {/* Solution */}
+                        <div className="space-y-2">
+                          <h2 className="font-semibold text-xl text-blue-400">Solution</h2>
+                          <p className="text-white-50">{card.solution}</p>
+                        </div>
+
+                        {/* Impact */}
+                        {card.impact && (
+                          <div className="space-y-2">
+                            <h2 className="font-semibold text-xl text-blue-400">Impact</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {card.impact.map((metric, idx) => (
+                                <div key={idx} className="bg-gray-800 rounded p-3">
+                                  <div className="flex items-center mb-2">
+                                    <div className="w-6 h-6 bg-blue-500 rounded mr-2 flex items-center justify-center text-xs text-white">
+                                      {idx + 1}
+                                    </div>
+                                    <span className="font-semibold text-white">{metric.label}</span>
+                                  </div>
+                                  <div className="text-2xl font-bold text-blue-300">{metric.value}</div>
+                                  <p className="text-white-50 text-sm">{metric.description}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Technical Details */}
+                        {card.technicalDetails && (
+                          <div className="space-y-2">
+                            <h2 className="font-semibold text-xl text-blue-400">Technical Approach</h2>
+                            <p className="text-white-50">{card.technicalDetails}</p>
+                          </div>
+                        )}
+
+                        {/* Technologies */}
+                        {card.technologies && (
+                          <div className="space-y-2">
+                            <h2 className="font-semibold text-xl text-blue-400">Technologies</h2>
+                            <div className="flex flex-wrap gap-2">
+                              {card.technologies.map((tech, idx) => (
+                                <span key={idx} className="bg-gray-800 text-white-50 px-3 py-1 rounded text-sm">
+                                  {tech.name} {tech.level && `(${tech.level})`}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Original Responsibilities (keeping for compatibility) */}
+                        {card.responsibilities && (
+                          <div className="space-y-2">
+                            <h2 className="font-semibold text-xl text-blue-400">Responsibilities</h2>
+                            <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
+                              {card.responsibilities.map((responsibility) => (
+                                <li key={responsibility} className="text-lg">
+                                  {responsibility}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

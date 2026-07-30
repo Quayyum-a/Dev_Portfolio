@@ -26,7 +26,7 @@ const Hero = () => {
   return (
     <section id="hero" className="relative overflow-hidden">
       <div className="absolute top-0 left-0 z-0">
-        <img src="/images/bg.png" alt="background" />
+        <img src="/images/bg.png" alt="background" loading="lazy" />
       </div>
       <div className="hero-layout">
         {/* LEFT: HERO CONTENT */}
@@ -46,6 +46,7 @@ const Hero = () => {
                           src={word.imgPath}
                           alt={word.text}
                           className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-white-50"
+                          loading="lazy"
                         />
                         <span>{word.text}</span>
                       </span>
@@ -57,8 +58,7 @@ const Hero = () => {
               <h1>that Deliver Results</h1>
             </div>
             <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-              Hi, I'm Quayyum, a developer based in Nigeria with a passion for
-              code.
+              Hi, I'm Quayyum, a full-stack software engineer specializing in backend systems, API architecture, and scalable applications.
             </p>
             <Button
               className="md:w-80 md:h-16 w-60 h-12"

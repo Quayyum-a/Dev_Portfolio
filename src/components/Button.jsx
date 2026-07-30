@@ -1,6 +1,8 @@
-const Button = ({text, className, id}) => {
+import React from "react"
+
+const Button = React.memo(({text, className, id}) => {
   return (
-    <a 
+    <a
     onClick={(e) => {
       e.preventDefault();
 
@@ -14,7 +16,7 @@ const Button = ({text, className, id}) => {
         window.scrollTo({top, behavior: 'smooth'})
       }
     }}
-    
+
     className={`${className ?? ''} cta-wrapper`}>
       <div className="cta-button group">
       <div className="bg-circle"/>
@@ -22,11 +24,11 @@ const Button = ({text, className, id}) => {
         {text}
       </p>
       <div className="arrow-wrapper">
-        <img src="/images/arrow-down.svg" alt="arrow" />
+        <img src="/images/arrow-down.svg" alt="arrow" loading="lazy" />
       </div>
       </div>
     </a>
   )
-}
+})
 
 export default Button

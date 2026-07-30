@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { navLinks } from "../constants";
 
-const NavBar = () => {
+const NavBar = React.memo(() => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

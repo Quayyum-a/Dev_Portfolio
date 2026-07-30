@@ -1,0 +1,742 @@
+{
+  "categories": {
+    "performance": {
+      "score": 0.45,
+      "title": "Performance",
+      "description": "How fast the page loads and becomes interactive to users.",
+      "scoreDisplayMode": "numeric"
+    },
+    "accessibility": {
+      "score": 0.68,
+      "title": "Accessibility",
+      "description": "How well the page accommodates users with disabilities.",
+      "scoreDisplayMode": "numeric"
+    },
+    "best-practices": {
+      "score": 0.75,
+      "title": "Best Practices",
+      "description": "Whether the page follows web development best practices.",
+      "scoreDisplayMode": "numeric"
+    },
+    "seo": {
+      "score": 0.82,
+      "title": "SEO",
+      "description": "How well the page is optimized for search engines.",
+      "scoreDisplayMode": "numeric"
+    },
+    "pwa": {
+      "score": 0.35,
+      "title": "Progressive Web App",
+      "description": "How well the page works as a progressive web app.",
+      "scoreDisplayMode": "numeric"
+    }
+  },
+  "audits": {
+    "first-contentful-paint": {
+      "id": "first-contentful-paint",
+      "title": "First Contentful Paint",
+      "description": "First Contentful Paint marks the time at which the first text or image is painted.",
+      "score": 0.42,
+      "displayValue": "3.2 s",
+      "numericValue": 3.2,
+      "warningHeader": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this.",
+      "explanation": "Fast page loads start with a quick time to the first byte (TTFB). Consider using a CDN or improving your server response times.",
+      "scoreDisplayMode": "numeric"
+    },
+    "largest-contentful-paint": {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted.",
+      "score": 0.31,
+      "displayValue": "4.8 s",
+      "numericValue": 4.8,
+      "warningHeader": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this.",
+      "explanation": "To improve LCP, consider:\n1. Optimizing your server response time\n2. Optimizing your CSS\n3. Eliminating render-blocking resources\n4. Optimizing your images",
+      "scoreDisplayMode": "numeric"
+    },
+    "speed-index": {
+      "id": "speed-index",
+      "title": "Speed Index",
+      "description": "Speed Index shows how quickly the contents of a page are visibly populated.",
+      "score": 0.38,
+      "displayValue": "4.5 s",
+      "numericValue": 4.5,
+      "scoreDisplayMode": "numeric"
+    },
+    "total-blocking-time": {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+      "score": 0.52,
+      "displayValue": "320 ms",
+      "numericValue": 320,
+      "scoreDisplayMode": "numeric"
+    },
+    "cumulative-layout-shift": {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
+      "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport.",
+      "score": 0.92,
+      "displayValue": "0.08",
+      "numericValue": 0.08,
+      "scoreDisplayMode": "numeric"
+    },
+    "interactive": {
+      "id": "interactive",
+      "title": "Time to Interactive",
+      "description": "Time to interactive is the amount of time it takes for the page to become fully interactive.",
+      "score": 0.48,
+      "displayValue": "5.6 s",
+      "numericValue": 5.6,
+      "scoreDisplayMode": "numeric"
+    },
+    "max-potential-fid": {
+      "id": "max-potential-fid",
+      "title": "Max Potential First Input Delay",
+      "description": "The maximum possible First Input Delay that users could experience.",
+      "score": 0.65,
+      "displayValue": "80 ms",
+      "numericValue": 80,
+      "scoreDisplayMode": "numeric"
+    },
+    "accesskeys": {
+      "id": "accesskeys",
+      "title": "[accesskey] values are unique",
+      "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "binary"
+    },
+    "aria-allowed-attr": {
+      "id": "aria-allowed-attr",
+      "title": "ARIA attributes are not prohibited on an element",
+      "description": "An aria-\* attribute on an element does not match the name of any ARIA attribute.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "binary"
+    },
+    "aria-hidden-body": {
+      "id": "aria-hidden-body",
+      "title": "The [aria-hidden=\"true\"] attribute is not present on the body",
+      "description": "Assistive technology, like screen readers, work better when they only encounter text meant to be read.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "binary"
+    },
+    "aria-hidden-focus": {
+      "id": "aria-hidden-focus",
+      "title": "Elements with aria-hidden=\"true\" do not contain focusable elements",
+      "description": "If elements are decorated with aria-hidden=\"true\", ensure that neither the element nor any of its focusable descendants are unintentionally visible to screen readers.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "binary"
+    },
+    "aria-required-attr": {
+      "id": "aria-required-attr",
+      "title": "ARIA states and properties have the correct values",
+      "description": "Values must be valid for the given ARIA state or property.",
+      "score": 0.8,
+      "displayValue": "Passed",
+      "numericValue": 0.8,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-required-children": {
+      "id": "aria-required-children",
+      "title": "Elements with ARIA roles require specific children",
+      "description": "ARIA roles require specific attributes and children to perform their intended accessibility functions.",
+      "score": 0.75,
+      "displayValue": "Passed",
+      "numericValue": 0.75,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-required-parent": {
+      "id": "aria-required-parent",
+      "title": "Elements with ARIA roles require specific parents",
+      "description": "ARIA roles require specific parents to perform their intended accessibility functions.",
+      "score": 0.85,
+      "displayValue": "Passed",
+      "numericValue": 0.85,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-roles": {
+      "id": "aria-roles",
+      "title": "ARIA roles are used correctly",
+      "description": "ARIA roles must be used on elements that match the implicit (or explicit) role of that element.",
+      "score": 0.7,
+      "displayValue": "Passed",
+      "numericValue": 0.7,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-toggle-field-has-aria-checked": {
+      "id": "aria-toggle-field-has-aria-checked",
+      "title": "Toggle fields have a non-empty \"aria-checked\" state",
+      "description": "Toggle fields must have a \"aria-checked\" attribute that reflects the current state of the toggle.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-valid-attr-value": {
+      "id": "aria-valid-attr-value",
+      "title": "ARIA attributes have valid values",
+      "description": "All ARIA state and properties are receiving the correct values.",
+      "score": 0.9,
+      "displayValue": "Passed",
+      "numericValue": 0.9,
+      "scoreDisplayMode": "manual"
+    },
+    "aria-visibility": {
+      "id": "aria-visibility",
+      "title": "ARIA hidden elements do not have focusable descendants",
+      "description": "When an element is hidden using aria-hidden=\"true\", assistive technologies such as screen readers are able to ignore the element and all of its descendants.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "button-name": {
+      "id": "button-name",
+      "title": "Buttons have an accessible name",
+      "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", which is useless to a user who relies on screen readers.",
+      "score": 0.85,
+      "displayValue": "Passed",
+      "numericValue": 0.85,
+      "scoreDisplayMode": "manual"
+    },
+    "color-contrast": {
+      "id": "color-contrast",
+      "title": "Color contrast",
+      "description": "Users who have low vision or are color deficient rely on sufficient color contrast between text and its background.",
+      "score": 0.6,
+      "displayValue": "Failed",
+      "numericValue": 0.6,
+      "scoreDisplayMode": "manual"
+    },
+    "definition-list": {
+      "id": "definition-list",
+      "title": "Definition list items are arranged in proper order",
+      "description": "When a definition list is not properly formatted, screen readers will produce confusing output.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "dlitem": {
+      "id": "dlitem",
+      "title": "`<dd>` elements in `<description>` must be paired",
+      "description": "In a description list, each `<dd>` element must be paired with a `<dt>` element.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "document-title": {
+      "id": "document-title",
+      "title": "Document title",
+      "description": "Screen readers rely on a page title to inform users which page they are on.",
+      "score": 0.95,
+      "displayValue": "Passed",
+      "numericValue": 0.95,
+      "scoreDisplayMode": "manual"
+    },
+    "duplicate-id": {
+      "id": "duplicate-id",
+      "title": "Duplicate ID",
+      "description": "As a best practice, IDs are unique. If an element&rsquo;s ID is not unique, it&rsquo;s not only wasted bytes: screen readers may make it harder for users to distinguish between different elements.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "focus-trap": {
+      "id": "focus-trap",
+      "title": "Users can be trapped in modal dialogs if focus is not managed properly",
+      "description": "When a modal dialog is displayed, keyboard users may find themselves unable to exit the modal if they tab to the last focusable element within the modal.",
+      "score": 0.8,
+      "displayValue": "Passed",
+      "numericValue": 0.8,
+      "scoreDisplayMode": "manual"
+    },
+    "focusable-controls": {
+      "id": "focusable-controls",
+      "title": "All form controls have associated labels",
+      "description": "Ensuring that labels and form controls are properly associated is critical to form accessibility.",
+      "score": 0.92,
+      "displayValue": "Passed",
+      "numericValue": 0.92,
+      "scoreDisplayMode": "manual"
+    },
+    "focus-order": {
+      "id": "focus-order",
+      "title": "Logical tab order",
+      "description": "Tab navigation follows the order that elements are defined in the DOM.",
+      "score": 0.85,
+      "displayValue": "Passed",
+      "numericValue": 0.85,
+      "scoreDisplayMode": "manual"
+    },
+    "form-field-multiple-labels": {
+      "id": "form-field-multiple-labels",
+      "title": "Form fields have only one label",
+      "description": "Each form field should have no more than one label.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "frame-title": {
+      "id": "frame-title",
+      "title": "iframe elements have titles",
+      "description": "Screen­reader users rely on frame titles to describe the contents of frames.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "heading-order": {
+      "id": "heading-order",
+      "title": "Heading levels are only descended by one",
+      "description": "Heading elements should be ordered properly. E.g. H2 &ndash; H4 is not a valid sequencing since it skips H3.",
+      "score": 0.9,
+      "displayValue": "Passed",
+      "numericValue": 0.9,
+      "scoreDisplayMode": "manual"
+    },
+    "html-has-lang": {
+      "id": "html-has-lang",
+      "title": "html element has a [lang] attribute",
+      "description": "If a page doesn&rsquo;t specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader.",
+      "score": 0,
+      "displayValue": "Failed",
+      "numericValue": 0,
+      "scoreDisplayMode": "manual"
+    },
+    "html-lang-valid": {
+      "id": "html-lang-valid",
+      "title": "html[lang] attribute is valid",
+      "description": "One of the most common causes of an invalid language value is incorrectly copying and pasting language codes.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "image-alt": {
+      "id": "image-alt",
+      "title": "Image elements have [alt] attributes",
+      "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored by screen readers.",
+      "score": 0.75,
+      "displayValue": "Failed",
+      "numericValue": 0.75,
+      "scoreDisplayMode": "manual"
+    },
+    "input-image-alt": {
+      "id": "input-image-alt",
+      "title": "Image buttons have [alt] attributes",
+      "description": "If an input element has an image as the source, then it must specify an alternate text.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "label": {
+      "id": "label",
+      "title": "Form elements have associated labels",
+      "description": "Ensuring that labels and form controls are properly associated is critical to form accessibility.",
+      "score": 0.95,
+      "displayValue": "Passed",
+      "numericValue": 0.95,
+      "scoreDisplayMode": "manual"
+    },
+    "layout-table": {
+      "id": "layout-table",
+      "title": "Tables are not being used for layout",
+      "description": "Using tables for layout presents several accessibility concerns to users who rely on screen readers.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "link-name": {
+      "id": "link-name",
+      "title": "Links have a discernible name",
+      "description": "The link text (and alternate text for images, if present) is discernible by screen readers.",
+      "score": 0.8,
+      "displayValue": "Failed",
+      "numericValue": 0.8,
+      "scoreDisplayMode": "manual"
+    },
+    "list": {
+      "id": "list",
+      "title": "List items are not contained in <li> elements",
+      "description": "List items must be contained in <li> elements to be accessible to screen readers.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "listitem": {
+      "id": "listitem",
+      "title": "List items are properly spaced",
+      "description": "List items must have adequate vertical spacing to be legible.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "logical-tab-order": {
+      "id": "logical-tab-order",
+      "title": "Logical tab order",
+      "description": "Custom keyboard navigation controls need to follow a logical tab order.",
+      "score": 0.8,
+      "displayValue": "Passed",
+      "numericValue": 0.8,
+      "scoreDisplayMode": "manual"
+    },
+    "meta-viewport": {
+      "id": "meta-viewport",
+      "title": "Document has a meta viewport",
+      "description": "The meta viewport element gives browser instructions on how to control the page’s dimensions and scaling.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "object-alt": {
+      "id": "object-alt",
+      "title": "Objects have alternative text",
+      "description": "Screen readers cannot translate non-text content. Adding alternative text helps convey the purpose of non-text objects in web pages.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "rotation": {
+      "id": "rotation",
+      "title": "User can adjust the text spacing",
+      "description": "Ensure that line height (leading), tracking, and word spacing can be adjusted without loss of content or function.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "skip-heading": {
+      "id": "skip-heading",
+      "title": "Skipping heading levels",
+      "description": "Skipping heading levels can be confusing and should be avoided where possible.",
+      "score": 0.9,
+      "displayValue": "Passed",
+      "numericValue": 0.9,
+      "scoreDisplayMode": "manual"
+    },
+    "splash-screen": {
+      "id": "splash-screen",
+      "title": "Does not delay the first paint",
+      "description": "Pages that have a splash screen or an app install banner delay the first paint.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "tabindex": {
+      "id": "tabindex",
+      "title": "Tabindex attributes are used correctly",
+      "description": "tabIndex must be greater than or equal to 0.",
+      "score": 0.95,
+      "displayValue": "Passed",
+      "numericValue": 0.95,
+      "scoreDisplayMode": "manual"
+    },
+    "touchevent-listeners": {
+      "id": "touchevent-listeners",
+      "title": "Touch event listeners",
+      "description": "Applications that listen to touch events on elements must do so explicitly rather than relying on mouse events.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "video-caption": {
+      "id": "video-caption",
+      "title": "Video elements have captions",
+      "description": "Video captions make videos accessible to people who are deaf or hard of hearing.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "video-description": {
+      "id": "video-description",
+      "title": "Video elements have descriptions",
+      "description": "Video descriptions make videos accessible to people who are blind or have low vision.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "manifest-exists": {
+      "id": "manifest-exists",
+      "title": "Web App Manifest Exists",
+      "description": "Web App Manifests make your web application usable offline and provide a native-like experience.",
+      "score": 0,
+      "displayValue": "Failed",
+      "numericValue": 0,
+      "scoreDisplayMode": "manual"
+    },
+    "manifest-start-url": {
+      "id": "manifest-start-url",
+      "title": "Manifest start_url is safe to use",
+      "description": "The start_url is required and should be preferably pointing to index.html.",
+      "score": 0,
+      "displayValue": "Not applicable",
+      "numericValue": 0,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "uses-http2": {
+      "id": "uses-http2",
+      "title": "Uses HTTP/2",
+      "description": "Using HTTP/2 can offer many benefits over HTTP/1.x, including better performance.",
+      "score": 0.5,
+      "displayValue": "Failed",
+      "numericValue": 0.5,
+      "scoreDisplayMode": "manual"
+    },
+    "uses-long-cache-ttl": {
+      "id": "uses-long-cache-ttl",
+      "title": "Uses long cache TTL",
+      "description": "Leveraging the browser cache can speed up page loads by reducing network latency.",
+      "score": 0.3,
+      "displayValue": "Failed",
+      "numericValue": 0.3,
+      "scoreDisplayMode": "manual"
+    },
+    "uses-rel-preconnect": {
+      "id": "uses-rel-preconnect",
+      "title": "Uses preconnect to reduce request latency",
+      "description": "Preconnect hints tell the browser to initiate an early connection to an origin.",
+      "score": 0.5,
+      "displayValue": "Failed",
+      "numericValue": 0.5,
+      "scoreDisplayMode": "manual"
+    },
+    "uses-rel-preload": {
+      "id": "uses-rel-preload",
+      "title": "Uses preload to optimize key requests",
+      "description": "Preload hints tell the browser to request critical resources ahead of time.",
+      "score": 0.4,
+      "displayValue": "Failed",
+      "numericValue": 0.4,
+      "scoreDisplayMode": "manual"
+    },
+    "uses-rel-prerender": {
+      "id": "uses-rel-prerender",
+      "title": "Uses prerender to reduce request latency",
+      "description": "Prerender hints tell the browser to render a page in advance.",
+      "score": 0,
+      "displayValue": "Not applicable",
+      "numericValue": 0,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "redirects": {
+      "id": "redirects",
+      "title": "Avoids an excessive number of redirects",
+      "description": "Having more than one redirect is unnecessary. In the worst case, each redirect incurs an additional network round-trip, which adds delay to the overall request.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "uses-text-compression": {
+      "id": "uses-text-compression",
+      "title": "Enable Text Compression",
+      "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes.",
+      "score": 0.8,
+      "displayValue": "Passed",
+      "numericValue": 0.8,
+      "scoreDisplayMode": "manual"
+    },
+    "offline-start-url": {
+      "id": "offline-start-url",
+      "title": "Start_url responds with a 200 when offline",
+      "description": "If you specify a start_url in your manifest, it should respond with a 200 when the user is offline.",
+      "score": 0,
+      "displayValue": "Not applicable",
+      "numericValue": 0,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "redirects-http": {
+      "id": "redirects-http",
+      "title": "Redirects HTTP traffic to HTTPS",
+      "description": "If you have already set up your website to use HTTPS, make sure that you redirect all HTTP traffic to that secure version.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "is-on-https": {
+      "id": "is-on-https",
+      "title": "Is on HTTPS",
+      "description": "Secure websites have URLs that begin with https:// rather than http://.",
+      "score": 1,
+      "displayValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "geolocation-on-start": {
+      "id": "geolocation-on-start",
+      "title": "Does not request the geolocation permission on entry",
+      "description": "Sites that immediately request geolocation upon page load can appear untrustworthy before the user gets the chance to navigate away from the site.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "notification-on-start": {
+      "id": "notification-on-start",
+      "title": "Does not request the notification permission on entry",
+      "description": "Sites that immediately request notifications upon page load can appear untrustworthy before the user gets the chance to navigate away from the site.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "device-forgetful-user": {
+      "id": "device-forgetful-user",
+      "title": "Is not vulnerable to the fortnite bug",
+      "description": "Ensure that the site is not vulnerable to the \"Fortnite bug\" where allowing access to specific sensors can lead to leaking of sensitive data.",
+      "score": 1,
+      "displayValue": "Not applicable",
+      "numericValue": 1,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "json-valid-schema": {
+      "id": "json-valid-schema",
+      "title": "Manifest is a valid JSON",
+      "description": "While parsing the manifest, it is possible to encounter an error. Validate your manifest against the official schema to ensure it is valid.",
+      "score": 0,
+      "displayValue": "Not applicable",
+      "numericValue": 0,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "csp-xss": {
+      "id": "csp-xss",
+      "title": "Content Security Policy (CSP): XSS protection",
+      "description": "This audit checks whether your CSP is effective against XSS attacks.",
+      "score": 0.4,
+      "displayValue": "Failed",
+      "numericValue": 0.4,
+      "scoreDisplayMode": "manual"
+    },
+    "efficient-animated-content": {
+      "id": "efficient-animated-content",
+      "title": "Uses efficient animated content",
+      "description": "Consider using CSS transitions instead of JavaScript animations to create performant animations.",
+      "score": 0.3,
+      "displayValue": "Failed",
+      "numericValue": 0.3,
+      "scoreDisplayMode": "manual"
+    },
+    "bootup-time": {
+      "id": "bootup-time",
+      "title": "JavaScript bootup time is high",
+      "description": "High bootup time indicates a large amount of JavaScript is being parsed and/or compiled on the main thread.",
+      "score": 0.55,
+      "displayValue": "Failed",
+      "numericValue": 0.55,
+      "scoreDisplayMode": "manual"
+    },
+    "double-zoom": {
+      "id": "double-zoom",
+      "title": "Page isn't be zoom is disabled",
+      "description": "This test ensures that there are no user-scalable=no values in the viewport meta tag.",
+      "score": 1,
+      "drawValue": "Passed",
+      "numericValue": 1,
+      "scoreDisplayMode": "manual"
+    },
+    "critical-request-chains": {
+      "id": "critical-request-chains",
+      "title": "Reduce the impact of third-party code",
+      "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your main content has loaded.",
+      "score": 0.6,
+      "displayValue": "Failed",
+      "numericValue": 0.6,
+      "scoreDisplayMode": "manual"
+    },
+    "render-blocking-resources": {
+      "id": "render-blocking-resources",
+      "title": "Eliminate render-blocking resources",
+      "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles.",
+      "score": 0.4,
+      "displayValue": "Failed",
+      "numericValue": 0.4,
+      "scoreDisplayMode": "manual"
+    },
+    "unused-css-rules": {
+      "id": "unused-css-rules",
+      "title": "Reduce unused CSS",
+      "description": "If the page uses excessive amounts of CSS, much of it may be unnecessary.",
+      "score": 0.55,
+      "displayValue": "Failed",
+      "numericValue": 0.55,
+      "scoreDisplayMode": "manual"
+    },
+    "unused-javascript": {
+      "id": "unused-javascript",
+      "title": "Remove unused JavaScript",
+      "description": "Users today are blessed with prolific amounts of JavaScript in their journey to building whatever they dream of.",
+      "score": 0.5,
+      "displayValue": "Failed",
+      "numericValue": 0.5,
+      "scoreDisplayMode": "manual"
+    },
+    "uses-responsive-images": {
+      "id": "uses-responsive-images",
+      "title": "Serve images with appropriate dimensions",
+      "description": "Your page might be using images that are larger than they need to be on the user's device.",
+      "score": 0.45,
+      "displayValue": "Failed",
+      "numericValue": 0.45,
+      "scoreDisplayMode": "manual"
+    },
+    "total-byte-weight": {
+      "id": "total-byte-weight",
+      "title": "Total Byte Weight",
+      "description": "Total byte weight for HTML + JS + CSS + Images",
+      "score": 0.25,
+      "displayValue": "9,842 KB",
+      "numericValue": 9842,
+      "scoreDisplayMode": "numeric"
+    },
+    "uses-webp-images": {
+      "id": "uses-webp-images",
+      "title": "Use image formats better suited for the web",
+      "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption.",
+      "score": 0.2,
+      "displayValue": "Failed",
+      "numericValue": 0.2,
+      "scoreDisplayMode": "manual"
+    },
+    "unminified-javascript": {
+      "id": "unminified-javascript",
+      "title": "Minify JavaScript",
+      "description": "JavaScript files that are not minified are unnecessarily large.",
+      "score": 0.85,
+      "displayValue": "Passed",
+      "numericValue": 0.85,
+      "scoreDisplayMode": "manual"
+    },
+    "unused-css-rules": {
+      "id": "unused-css-rules",
+      "title": "Reduce unused CSS from third-party providers",
+      "description": "If you use a third-party library, it's possible that some of the CSS you are including is not required for your specific use case.",
+      "score": 0.65,
+      "displayValue": "Failed",
+      "numericValue": 0.65,
+      "scoreDisplayMode": "manual"
+    }
+  }
+}

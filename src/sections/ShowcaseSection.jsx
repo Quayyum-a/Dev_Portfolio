@@ -50,7 +50,7 @@ const ShowcaseSection = () => {
           {/* LEFT */}
           <div className="first-project-wrapper" ref={project1Ref}>
             <div className="image-wrapper">
-              <img src="/images/project1.png" alt="Ryde" />
+              <img src="/images/project1.png" alt="Ryde" loading="lazy" />
             </div>
             <div className="text-content">
               <h2>
@@ -70,13 +70,14 @@ const ShowcaseSection = () => {
                 <img
                   src="/images/project2.png"
                   alt="Library Management Platform"
+                  loading="lazy"
                 />
               </div>
               <h2>Library Management Platform</h2>
             </div>
             <div className="project" ref={project3Ref}>
               <div className="image-wrapper bg-[#ffe7db]">
-                <img src="/images/project3.png" alt="YC Directory" />
+                <img src="/images/project3.png" alt="YC Directory" loading="lazy" />
               </div>
               <h2>YC Directory - A Startup Showcase App </h2>
             </div>
