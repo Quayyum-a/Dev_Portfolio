@@ -1,5 +1,11 @@
 import React, { useRef, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, extend } from "@react-three/fiber";
+import * as THREE from "three";
+
+// Extend Three.js objects used in this component
+extend({
+  ...THREE,
+});
 
 const Particles = React.memo(({ count = 200 }) => {
   const mesh = useRef();

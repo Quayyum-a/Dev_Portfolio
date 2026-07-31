@@ -1,4 +1,11 @@
 import { useGLTF } from "@react-three/drei";
+import { extend } from "@react-three/fiber";
+import * as THREE from "three";
+
+// Extend Three.js objects used in this component
+extend({
+  ...THREE,
+});
 
 export function Computer(props) {
   const { nodes, materials } = useGLTF(

@@ -3,6 +3,15 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
 import { BlendFunction as PPBlendFunction } from "postprocessing";
 import * as THREE from "three";
+import { extend } from "@react-three/fiber";
+
+// Extend all Three.js objects used in this component
+extend({
+  ...THREE,
+  EffectComposer,
+  SelectiveBloom,
+  BlendFunction: PPBlendFunction,
+});
 
 // Room content component that receives the loader as a prop
 function RoomContent({ loader, ...props }) {

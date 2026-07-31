@@ -1,8 +1,14 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, extend } from "@react-three/fiber";
 import React, { useMemo } from "react";
+import * as THREE from "three";
 
 import Computer from "./Computer";
+
+// Extend Three.js objects used in this component
+extend({
+  ...THREE,
+});
 
 const ContactExperience = () => {
   const cameraPosition = useMemo(() => [0, 3, 7], []);

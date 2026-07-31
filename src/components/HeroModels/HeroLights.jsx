@@ -1,4 +1,10 @@
 import * as THREE from "three";
+import { extend } from "@react-three/fiber";
+
+// Extend Three.js objects used in this component
+extend({
+  ...THREE,
+});
 
 const HeroLights = () => {
   return (
