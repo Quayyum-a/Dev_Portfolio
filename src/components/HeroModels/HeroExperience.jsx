@@ -1,5 +1,4 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, extend } from "@react-three/fiber";
 import React, { useMemo } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Room } from "./Room";
@@ -8,6 +7,7 @@ import Particles from "./Particles";
 import * as THREE from "three";
 
 // Extend Three.js objects used as JSX elements in this component
+import { extend } from "@react-three/fiber";
 extend({
   Group: THREE.Group,
 });
@@ -33,7 +33,7 @@ const HeroExperience = () => {
   const particleCount = useMemo(() => (isMobile ? 500 : 1000), [isMobile]);
 
   return (
-    <Canvas camera={{ position: cameraPosition, fov: cameraFov }}>
+    <>
       <OrbitControls {...orbitControlsProps} />
 
       <HeroLights />
@@ -46,7 +46,7 @@ const HeroExperience = () => {
       >
         <Room />
       </group>
-    </Canvas>
+    </>
   );
 };
 

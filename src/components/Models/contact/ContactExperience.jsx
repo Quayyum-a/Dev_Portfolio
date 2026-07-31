@@ -1,5 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, extend } from "@react-three/fiber";
+import { extend } from "@react-three/fiber";
 import React, { useMemo } from "react";
 import * as THREE from "three";
 
@@ -66,7 +66,7 @@ const ContactExperience = () => {
   );
 
   return (
-    <Canvas shadows camera={{ position: cameraPosition, fov: cameraFov }}>
+    <>
       <ambientLight {...ambientLightProps} />
 
       <directionalLight {...directionalLight1Props} />
@@ -85,7 +85,7 @@ const ContactExperience = () => {
       <group {...computerGroupProps}>
         <Computer />
       </group>
-    </Canvas>
+    </>
   );
 };
 

@@ -4,15 +4,13 @@ import { createLazy3DComponent } from "../components/Lazy3D";
 import { words } from "../constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import CanvasProvider from "../components/CanvasProvider";
+import HeroExperience from "../components/HeroModels/HeroExperience";
 
-const LazyHeroExperience = createLazy3DComponent(
-  () => import("../components/HeroModels/HeroExperience"),
-  {
-    displayName: 'LazyHeroExperience',
-    preload: true,
-    rootMargin: '200px'
-  }
-);
+const LazyHeroExperience = ({ children, ...props }) => {
+  // HeroExperience is already lazy-loaded via CanvasProvider
+  return <HeroExperience {...props} />;
+};
 
 const Hero = () => {
   useGSAP(() => {
@@ -79,7 +77,12 @@ const Hero = () => {
         {/* RIGHT: 3D MODEL */}
         <figure>
           <div className="hero-3d-layout">
-            <LazyHeroExperience />
+            <CanvasProvider
+              cameraProps={{ position: [0, 0, 15], fov: 45 }}
+              glProps={{ antialias: true, alpha: true }}
+            >
+              <HeroExperience />
+            </CanvasProvider>
           </div>
         </figure>
       </div>

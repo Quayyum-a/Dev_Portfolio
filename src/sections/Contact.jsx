@@ -2,16 +2,8 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
 import TitleHeader from "../components/TitleHeader";
-import { createLazy3DComponent } from "../components/Lazy3D";
-
-const LazyContactExperience = createLazy3DComponent(
-  () => import("../components/Models/contact/ContactExperience"),
-  {
-    displayName: 'LazyContactExperience',
-    preload: false,
-    rootMargin: '100px'
-  }
-);
+import CanvasProvider from "../components/CanvasProvider";
+import ContactExperience from "../components/Models/contact/ContactExperience";
 
 const Contact = () => {
   const formRef = useRef(null);
@@ -118,7 +110,12 @@ const Contact = () => {
           </div>
           <div className="xl:col-span-7 min-h-96">
             <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <LazyContactExperience />
+              <CanvasProvider
+                cameraProps={{ position: [0, 3, 7], fov: 45 }}
+                glProps={{ antialias: true, alpha: true }}
+              >
+                <ContactExperience />
+              </CanvasProvider>
             </div>
           </div>
         </div>

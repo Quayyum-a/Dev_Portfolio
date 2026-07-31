@@ -1,7 +1,12 @@
 import { Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { extend } from "@react-three/fiber";
 import React, { useEffect, Suspense } from "react";
 import * as THREE from "three";
+
+// Extend Three.js objects used as JSX elements in this component
+extend({
+  Primitive: THREE.Object3D,
+});
 
 const Fallback = () => <div style={{ color: "red" }}>Model failed to load</div>;
 
@@ -17,7 +22,7 @@ const TechIconModel = ({ model }) => {
     }
   }, [scene]);
   return (
-    <Canvas>
+    <>
       <ambientLight intensity={0.3} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <Environment preset="city" />
@@ -27,7 +32,7 @@ const TechIconModel = ({ model }) => {
           <primitive object={scene.scene} />
         </group>
       </Float>
-    </Canvas>
+    </>
   );
 };
 
