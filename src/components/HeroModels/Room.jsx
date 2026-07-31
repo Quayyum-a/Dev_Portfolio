@@ -1,12 +1,12 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
 import { BlendFunction as PPBlendFunction } from "postprocessing";
 import * as THREE from "three";
-import { gltfLoader } from "../../utils/gltfLoader";
 
-export function Room(props) {
-  const { nodes, materials } = useGLTF("/models/draco/optimized-room.glb", gltfLoader);
+// Room content component that receives the loader as a prop
+function RoomContent({ loader, ...props }) {
+  const { nodes, materials } = useGLTF("/models/draco/optimized-room.glb", loader);
   const screensRef = useRef();
   const matcapTexture = useTexture("/images/textures/mat1.png");
 
@@ -51,10 +51,10 @@ export function Room(props) {
       <EffectComposer>
         <SelectiveBloom
           selection={screensRef}
-          intensity={1.5} // Strength of the bloom
-          luminanceThreshold={0.2} // Minimum luminance needed
-          luminanceSmoothing={0.9} // Smooth transition
-          blendFunction={PPBlendFunction.ADD} // How it blends
+          intensity={1.5}
+          luminanceThreshold={0.2}
+          luminanceSmoothing={0.9}
+          blendFunction={BlendFunction.ADD}
         />
       </EffectComposer>
       <mesh
@@ -178,4 +178,20 @@ export function Room(props) {
   );
 }
 
-useGLTF.preload("/models/draco/optimized-room.glb", gltfLoader);
+export function Room(props) {
+  const [loader, setLoader] = useState(null);
+
+  useEffect(() => {
+    import("../../utils/gltfLoader").then(({ gltfLoaderPromise }) => {
+      gltfLoaderPromise.then(setLoader);
+    });
+  }, []);
+
+  if (!loader) {
+    return <group {...props} dispose={null}>Loading room model...</group>;
+  }
+
+  return <RoomContent loader={loader} {...props} />;
+}
+
+useGLTF.preload("/models/draco/optimized-room.glb");
