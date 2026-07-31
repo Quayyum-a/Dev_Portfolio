@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, Suspense } from "react";
 import TitleHeader from "../components/TitleHeader";
 import { techStackIcons } from "../constants";
 import { Canvas } from "@react-three/fiber";
