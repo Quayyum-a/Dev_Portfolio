@@ -2,9 +2,10 @@ import { useGLTF } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Extend Three.js objects used in this component
+// Extend Three.js objects used as JSX elements in this component
 extend({
-  ...THREE,
+  Group: THREE.Group,
+  Mesh: THREE.Mesh,
 });
 
 export function Computer(props) {

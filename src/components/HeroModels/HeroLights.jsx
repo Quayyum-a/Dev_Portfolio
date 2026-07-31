@@ -1,9 +1,12 @@
 import * as THREE from "three";
 import { extend } from "@react-three/fiber";
 
-// Extend Three.js objects used in this component
+// Extend Three.js objects used as JSX elements in this component
 extend({
-  ...THREE,
+  SpotLight: THREE.SpotLight,
+  PointLight: THREE.PointLight,
+  RectAreaLight: THREE.RectAreaLight,
+  Primitive: THREE.Object3D, // primitive uses Object3D
 });
 
 const HeroLights = () => {

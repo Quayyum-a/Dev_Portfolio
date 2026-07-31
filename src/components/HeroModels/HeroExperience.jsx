@@ -7,9 +7,9 @@ import HeroLights from "./HeroLights";
 import Particles from "./Particles";
 import * as THREE from "three";
 
-// Extend Three.js objects used in this component
+// Extend Three.js objects used as JSX elements in this component
 extend({
-  ...THREE,
+  Group: THREE.Group,
 });
 
 const HeroExperience = () => {

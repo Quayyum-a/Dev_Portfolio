@@ -5,9 +5,14 @@ import * as THREE from "three";
 
 import Computer from "./Computer";
 
-// Extend Three.js objects used in this component
+// Extend Three.js objects used as JSX elements in this component
 extend({
-  ...THREE,
+  Group: THREE.Group,
+  Mesh: THREE.Mesh,
+  PlaneGeometry: THREE.PlaneGeometry,
+  MeshStandardMaterial: THREE.MeshStandardMaterial,
+  AmbientLight: THREE.AmbientLight,
+  DirectionalLight: THREE.DirectionalLight,
 });
 
 const ContactExperience = () => {

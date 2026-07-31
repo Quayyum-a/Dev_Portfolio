@@ -5,9 +5,10 @@ import { BlendFunction as PPBlendFunction } from "postprocessing";
 import * as THREE from "three";
 import { extend } from "@react-three/fiber";
 
-// Extend all Three.js objects used in this component
+// Extend Three.js objects used as JSX elements in this component
 extend({
-  ...THREE,
+  Group: THREE.Group,
+  Mesh: THREE.Mesh,
   EffectComposer,
   SelectiveBloom,
   BlendFunction: PPBlendFunction,
