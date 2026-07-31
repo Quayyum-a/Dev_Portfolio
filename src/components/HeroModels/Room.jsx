@@ -3,9 +3,10 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
 import { BlendFunction as PPBlendFunction } from "postprocessing";
 import * as THREE from "three";
+import { gltfLoader } from "../../utils/gltfLoader";
 
 export function Room(props) {
-  const { nodes, materials } = useGLTF("/models/draco/optimized-room.glb");
+  const { nodes, materials } = useGLTF("/models/draco/optimized-room.glb", gltfLoader);
   const screensRef = useRef();
   const matcapTexture = useTexture("/images/textures/mat1.png");
 
@@ -177,4 +178,4 @@ export function Room(props) {
   );
 }
 
-useGLTF.preload("/models/draco/optimized-room.glb");
+useGLTF.preload("/models/draco/optimized-room.glb", gltfLoader);
