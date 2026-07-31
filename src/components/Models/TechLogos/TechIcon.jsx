@@ -11,7 +11,13 @@ extend({
 const Fallback = () => <div style={{ color: "red" }}>Model failed to load</div>;
 
 const TechIconModel = ({ model }) => {
-  const scene = useGLTF(model.modelPath);
+  const { scene } = useGLTF(model.modelPath);
+
+  // Guard against undefined scene during loading
+  if (!scene) {
+    return null;
+  }
+
   useEffect(() => {
     if (model.name === "Interactive Developer") {
       scene.scene.traverse((child) => {
@@ -21,6 +27,7 @@ const TechIconModel = ({ model }) => {
       });
     }
   }, [scene]);
+
   return (
     <>
       <ambientLight intensity={0.3} />

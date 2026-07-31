@@ -19,6 +19,12 @@ extend({
 
 const TechIconModel = ({ model, position }) => {
   const { scene } = useGLTF(model.modelPath);
+
+  // Guard against undefined scene during loading
+  if (!scene) {
+    return null;
+  }
+
   return (
     <group position={position} scale={model.scale} rotation={model.rotation}>
       <primitive object={scene.scene} />
@@ -32,19 +38,21 @@ const TechStackCanvas = () => {
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 10, 10]} intensity={1} />
       <OrbitControls enableZoom={false} enablePan={false} />
-      <group>
-        {techStackIcons.map((icon, index) => (
-          <TechIconModel
-            key={icon.name}
-            model={icon}
-            position={[
-              (index % 5) * 3 - 6,
-              Math.floor(index / 5) * -3 + 3,
-              0
-            ]}
-          />
-        ))}
-      </group>
+      <Suspense fallback={<group>Loading icons...</group>}>
+        <group>
+          {techStackIcons.map((icon, index) => (
+            <TechIconModel
+              key={icon.name}
+              model={icon}
+              position={[
+                (index % 5) * 3 - 6,
+                Math.floor(index / 5) * -3 + 3,
+                0
+              ]}
+            />
+          ))}
+        </group>
+      </Suspense>
     </Canvas>
   );
 }
