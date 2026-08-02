@@ -36,7 +36,7 @@ const TechIconModel = ({ model }) => {
       <OrbitControls enableZoom={false} />
       <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
         <group scale={model.scale} rotation={model.rotation}>
-          <primitive object={scene.scene} />
+          <primitive object={scene} />
         </group>
       </Float>
     </>

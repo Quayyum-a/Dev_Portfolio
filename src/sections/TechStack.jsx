@@ -27,7 +27,7 @@ const TechIconModel = ({ model, position }) => {
 
   return (
     <group position={position} scale={model.scale} rotation={model.rotation}>
-      <primitive object={scene.scene} />
+      <primitive object={scene} />
     </group>
   );
 };
