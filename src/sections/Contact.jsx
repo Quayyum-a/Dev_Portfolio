@@ -4,6 +4,7 @@ import emailjs from "@emailjs/browser";
 import TitleHeader from "../components/TitleHeader";
 import CanvasProvider from "../components/CanvasProvider";
 import ContactExperience from "../components/Models/contact/ContactExperience";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 const Contact = () => {
   const formRef = useRef(null);
@@ -110,12 +111,34 @@ const Contact = () => {
           </div>
           <div className="xl:col-span-7 min-h-96">
             <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <CanvasProvider
-                cameraProps={{ position: [0, 3, 7], fov: 45 }}
-                glProps={{ antialias: true, alpha: true }}
+              <ErrorBoundary
+                fallback={
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                      width: "100%",
+                      color: "#888",
+                      fontSize: "14px",
+                      background: "rgba(0,0,0,0.1)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <div style={{ textAlign: "center", padding: "20px" }}>
+                      <p style={{ margin: "0 0 8px 0" }}>3D experience unavailable</p>
+                    </div>
+                  </div>
+                }
               >
-                <ContactExperience />
-              </CanvasProvider>
+                <CanvasProvider
+                  cameraProps={{ position: [0, 3, 7], fov: 45 }}
+                  glProps={{ antialias: true, alpha: true }}
+                >
+                  <ContactExperience />
+                </CanvasProvider>
+              </ErrorBoundary>
             </div>
           </div>
         </div>
