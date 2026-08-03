@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
+import ErrorBoundary from "./ErrorBoundary";
 
 /**
  * CanvasProvider - Single Canvas provider for the entire application
@@ -24,7 +25,29 @@ const CanvasProvider = React.memo(({ children, cameraProps = {}, glProps = {} })
       camera={defaultCameraProps}
       gl={defaultGlProps}
     >
-      {children}
+      <ErrorBoundary
+        fallback={
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              width: "100%",
+              color: "#888",
+              fontSize: "14px",
+              background: "rgba(0,0,0,0.1)",
+              borderRadius: "8px",
+            }}
+          >
+            <div style={{ textAlign: "center", padding: "20px" }}>
+              <p style={{ margin: "0 0 8px 0" }}>3D experience unavailable</p>
+            </div>
+          </div>
+        }
+      >
+        {children}
+      </ErrorBoundary>
     </Canvas>
   );
 });
