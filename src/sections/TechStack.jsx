@@ -1,13 +1,13 @@
 import React, { useMemo, Suspense } from "react";
 import TitleHeader from "../components/TitleHeader";
 import { techStackIcons } from "../constants";
-import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CanvasProvider from "../components/CanvasProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,7 +34,7 @@ const TechIconModel = ({ model, position }) => {
 
 const TechStackCanvas = () => {
   return (
-    <Canvas camera={{ position: [0, 10, 20], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+    <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 10, 10]} intensity={1} />
       <OrbitControls enableZoom={false} enablePan={false} />
@@ -53,9 +53,9 @@ const TechStackCanvas = () => {
           ))}
         </group>
       </Suspense>
-    </Canvas>
+    </>
   );
-}
+};
 
 const TechStack = () => {
   useGSAP(() => {
@@ -85,7 +85,12 @@ const TechStack = () => {
         <div className="tech-grid">
           <div className="col-span-full">
             <div className="relative h-[500px] w-full">
-              <TechStackCanvas />
+              <CanvasProvider
+                cameraProps={{ position: [0, 10, 20], fov: 45 }}
+                glProps={{ antialias: true, alpha: true }}
+              >
+                <TechStackCanvas />
+              </CanvasProvider>
             </div>
           </div>
           <div className="tech-grid">
