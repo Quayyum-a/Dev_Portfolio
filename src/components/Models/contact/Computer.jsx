@@ -12,10 +12,12 @@ export function Computer(props) {
   // Use the Draco-compressed model for better performance
   const { nodes, materials } = useGLTF("/models/draco/computer-optimized.glb");
 
-  // The model has a single mesh with two primitives (ComputerDesk and FloppyDisk)
-  // Get the mesh geometry from the first node
+  // The model has a single node (Cube.000_ComputerDesk_0.001) containing two primitives
+  // Get the child meshes from the first (and only) node
   const meshEntries = Object.values(nodes);
-  const deskMesh = meshEntries[0];
+  const parentNode = meshEntries[0];
+  const deskMesh = parentNode.children?.[0];
+  const floppyMesh = parentNode.children?.[1];
 
   return (
     <group {...props} dispose={null}>
@@ -24,14 +26,14 @@ export function Computer(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={deskMesh.geometry}
+          geometry={deskMesh?.geometry}
           material={materials["ComputerDesk.001"]}
         />
         {/* Floppy Disk - second primitive (material index 1) */}
         <mesh
           castShadow
           receiveShadow
-          geometry={deskMesh.geometry}
+          geometry={floppyMesh?.geometry}
           material={materials["FloppyDisk.001"]}
         />
       </group>
